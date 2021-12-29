@@ -1,0 +1,68 @@
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+public class Lambda03 {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>(Arrays.asList("mehmet", "emre", "nilgun", "yildız", "kader", "emine", "islam", "islam", "emre"));
+        System.out.println("list elemanlarını alfabetik büyük harf sırasıyla ve tekrarsız yazdırınız");
+        alfabetikTekrarsiz(list);
+        System.out.println("list elemanları karakter sayısını ters sıralı tekrarsız yazdırınız");
+        karakterSayisiTersTekrarsız(list);
+        System.out.println("list elemanlarını karakter sayısına küçükten büyüğe göre yazdırınız");
+        karakterSayisiKckByk(list);
+        System.out.println("list elemanlarını son harfine göre ters sıralı yazdırın");
+        sonHarfTersSıralı(list);
+        System.out.println("çift sayılı elemanların karelerini hesaplayan, tekrarsiz büyükten küçüğe sıralı yazdırınız");
+        ciftElemanTekrasizBykKck(list);
+
+    }
+
+    //list elemanlarını alfabetik büyük harf sırasıyla ve tekrarsız yazdırınız
+    public static void alfabetikTekrarsiz(List<String> list) {
+        list.
+                stream().
+                //map(t->t.toUpperCase()).
+                        map(String::toUpperCase).
+                sorted().
+                distinct().
+                forEach(System.out::println);
+    }
+
+    //list elemanları karakter sayısını ters sıralı tekrarsız yazdırınız
+    public static void karakterSayisiTersTekrarsız(List<String> list) {
+        list.
+                stream().
+                map(t -> t.length()).
+                sorted(Comparator.reverseOrder()).
+                distinct().
+                forEach(Lambda01::printEl);
+    }
+
+    //list elemanlarını karakter sayısına küçükten büyüğe göre yazdırınız
+    public static void karakterSayisiKckByk(List<String> list) {
+        list.
+                stream().
+                sorted(Comparator.comparing(t -> t.length())).
+                forEach(System.out::println);
+    }
+    //list elemanlarını son harfine göre ters sıralı yazdırın
+    public static void sonHarfTersSıralı(List<String> list) {
+        list.
+                stream().
+                sorted(Comparator.comparing(t->t.toString().charAt(t.toString().length()-1)).reversed()).
+                forEach(System.out::println);
+    }
+    //çift sayılı elemanların karelerini hesaplayan, tekrarsiz büyükten küçüğe sıralı yazdırınız
+    public static void ciftElemanTekrasizBykKck(List<String> list) {
+        list.
+                stream().
+                map(t->t.length()*t.length()).
+                filter(Lambda01::ciftBul).
+                sorted(Comparator.reverseOrder()).
+                distinct().
+                forEach(Lambda01::printEl);
+    }
+}
